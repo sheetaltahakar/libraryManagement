@@ -12,22 +12,31 @@ const initialState = {
       id: 1,
       title: "1984",
       author: "George Orwell",
-      description: "tetsttttttttttttttttttttttttttttttttttttttttttttt",
+      description:
+        "This book is about a dystopian future where the government controls everything.",
       read: true,
     },
     {
       id: 2,
       title: "To Kill a Mockingbird",
       author: "Harper Lee",
-      description: "tetsttttttttttttttttttttttttttttttttttttttttttttt",
+      description: "This book is about racial injustice in the Deep South.",
       read: false,
     },
-    { id: 3, title: "Pride and Prejudice", author: "Jane Austen", read: true },
+    {
+      id: 3,
+      title: "Pride and Prejudice",
+      description:
+        "This book is a romantic novel that critiques the British landed gentry at the end of the 18th century.",
+      author: "Jane Austen",
+      read: true,
+    },
     {
       id: 4,
       title: "The Great Gatsby",
       author: "F. Scott Fitzgerald",
-      description: "tetsttttttttttttttttttttttttttttttttttttttttttttt",
+      description:
+        "This book is about the American dream and the disillusionment that comes with it.",
       read: false,
     },
   ],

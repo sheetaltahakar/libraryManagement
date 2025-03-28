@@ -22,11 +22,21 @@ export const ViewBooks = ({ isDetailViewOpen, handleClose, bookDetails }) => {
 
   return (
     <form>
-      <Dialog open={isDetailViewOpen} onClose={handleClose}>
-        <DialogTitle style={{ width: "500px" }}>View Book</DialogTitle>
+      <Dialog
+        open={isDetailViewOpen}
+        onClose={handleClose}
+        sx={{ color: "#757575" }}
+      >
+        <DialogTitle
+          style={{
+            width: "500px",
+            fontWeight: "bold",
+          }}
+        >
+          View Book
+        </DialogTitle>
         <DialogContent>
           <TextField
-            autoFocus
             required
             margin="dense"
             id="title"
@@ -34,12 +44,25 @@ export const ViewBooks = ({ isDetailViewOpen, handleClose, bookDetails }) => {
             label="Email Title"
             type="title"
             fullWidth
-            disabled
+            InputProps={{
+              readOnly: true,
+            }}
+            sx={{
+              color: "#000",
+              "& .MuiInputBase-input": {
+                color: "black",
+              },
+              "& .MuiFormControl-root:hover": {
+                backgroundColor: "transparent",
+              },
+              "& .MuiInputBase-root:hover": {
+                backgroundColor: "transparent",
+              },
+            }}
             value={bookTitle}
             onChange={(e) => setBookTitle(e.target.value)}
           />
           <TextField
-            autoFocus
             required
             margin="dense"
             id="author"
@@ -47,12 +70,25 @@ export const ViewBooks = ({ isDetailViewOpen, handleClose, bookDetails }) => {
             label="Email Author"
             type="author"
             fullWidth
-            disabled
+            InputProps={{
+              readOnly: true,
+            }}
+            sx={{
+              color: "#000",
+              "& .MuiInputBase-input": {
+                color: "black",
+              },
+              "& .MuiFormControl-root:hover": {
+                backgroundColor: "transparent",
+              },
+              "& .MuiInputBase-root:hover": {
+                backgroundColor: "transparent",
+              },
+            }}
             value={bookAuthor}
             onChange={(e) => setBookAuthor(e.target.value)}
           />
           <TextField
-            autoFocus
             required
             margin="dense"
             id="description"
@@ -60,7 +96,21 @@ export const ViewBooks = ({ isDetailViewOpen, handleClose, bookDetails }) => {
             label="Description"
             type="text"
             fullWidth
-            disabled
+            InputProps={{
+              readOnly: true,
+            }}
+            sx={{
+              color: "#000",
+              "& .MuiInputBase-input": {
+                color: "black",
+              },
+              "& .MuiFormControl-root:hover": {
+                backgroundColor: "transparent",
+              },
+              "& .MuiInputBase-root:hover": {
+                backgroundColor: "transparent",
+              },
+            }}
             value={bookDescription}
             onChange={(e) => setBookDescription(e.target.value)}
           />

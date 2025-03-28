@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -6,7 +6,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import { addBook } from "../actions/bookaction";
+import { updateBook } from "../actions/bookaction";
 import { z } from "zod";
 
 // Create Zod schema for form validation
@@ -16,14 +16,25 @@ const bookSchema = z.object({
   bookDescription: z.string().min(1, "Description is required"),
 });
 
-export const AddBooks = ({ isDialogOpen, handleClose, setAddBookData }) => {
+export const EditBooks = ({ isEditViewOpen, handleClose, bookDetails }) => {
   const dispatch = useDispatch();
   const [bookTitle, setBookTitle] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
   const [bookDescription, setBookDescription] = useState("");
   const [errors, setErrors] = useState({});
 
-  const onSubmit = () => {
+  // Set initial values when bookDetails change
+  useEffect(() => {
+    if (bookDetails) {
+      setBookTitle(bookDetails.title);
+      setBookAuthor(bookDetails.author);
+      setBookDescription(bookDetails.description);
+    }
+  }, [bookDetails]);
+
+  // Handle form submission
+  const handleSubmit = () => {
+    // Validate the form data using Zod
     const result = bookSchema.safeParse({
       bookTitle,
       bookAuthor,
@@ -31,18 +42,12 @@ export const AddBooks = ({ isDialogOpen, handleClose, setAddBookData }) => {
     });
 
     if (result.success) {
-      setAddBookData({
-        bookTitle,
-        bookAuthor,
-        description: bookDescription,
-      });
       dispatch(
-        addBook({
-          id: Date.now(),
+        updateBook(bookDetails.id, {
+          ...bookDetails,
           title: bookTitle,
           author: bookAuthor,
           description: bookDescription,
-          read: false,
         })
       );
       setBookTitle("");
@@ -51,6 +56,7 @@ export const AddBooks = ({ isDialogOpen, handleClose, setAddBookData }) => {
       setErrors({});
       handleClose();
     } else {
+      // If validation fails, set the errors state
       const errorMessages = result.error.formErrors.fieldErrors;
       setErrors(errorMessages);
     }
@@ -58,8 +64,8 @@ export const AddBooks = ({ isDialogOpen, handleClose, setAddBookData }) => {
 
   return (
     <form>
-      <Dialog open={isDialogOpen} onClose={handleClose}>
-        <DialogTitle style={{ width: "500px" }}>Add Book</DialogTitle>
+      <Dialog open={isEditViewOpen} onClose={handleClose}>
+        <DialogTitle style={{ width: "500px" }}>Edit Book</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -106,7 +112,7 @@ export const AddBooks = ({ isDialogOpen, handleClose, setAddBookData }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={onSubmit}>Submit</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </DialogActions>
       </Dialog>
     </form>
